@@ -1,0 +1,149 @@
+{
+	"info": {
+		"_postman_id": "7981aa06-d4a9-4e73-8f8d-df9dc087df34",
+		"name": "TestApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:8080/celebrities POST",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"people\": [\r\n        \"Jorge\",\r\n        \"Carlos\",\r\n        \"Juan\",\r\n        \"Maria\"\r\n    ],\r\n    \"relations\": [\r\n        {\r\n            \"x\": \"Jorge\",\r\n            \"y\": \"Carlos\"\r\n        },\r\n        {\r\n            \"x\": \"Jorge\",\r\n            \"y\": \"Maria\"\r\n        },\r\n        {\r\n            \"x\": \"Jorge\",\r\n            \"y\": \"Juan\"\r\n        },\r\n        {\r\n            \"x\": \"Carlos\",\r\n            \"y\": \"Maria\"\r\n        },\r\n        {\r\n            \"x\": \"Juan\",\r\n            \"y\": \"Maria\"\r\n        }\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/celebrities",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"celebrities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/celebrities GET",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080//celebrities/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"",
+						"celebrities",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/celebrities PUT",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 2,\r\n\r\n    \"people\": [\r\n        \"Pedro\",\r\n        \"Carlos\",\r\n        \"Juan\",\r\n        \"Maria\",\r\n        \"Eduardo\"\r\n    ],\r\n    \"relations\": [\r\n        {\r\n            \"x\": \"Pedro\",\r\n            \"y\": \"Carlos\"\r\n        },\r\n        {\r\n            \"x\": \"Pedro\",\r\n            \"y\": \"Maria\"\r\n        },\r\n        {\r\n            \"x\": \"Pedro\",\r\n            \"y\": \"Juan\"\r\n        },\r\n        {\r\n            \"x\": \"Carlos\",\r\n            \"y\": \"Maria\"\r\n        },\r\n        {\r\n            \"x\": \"Juan\",\r\n            \"y\": \"Maria\"\r\n        },\r\n        {\r\n            \"x\": \"Eduardo\",\r\n            \"y\": \"Maria\"\r\n        },\r\n        {\r\n        \t\"x\" : \"Maria\",\r\n        \t\"y\" :\"Pedro\" \r\n        }\r\n    ],\r\n    \"celebrities\": [\r\n        \"Maria\"\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "localhost:8080//celebrities/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"",
+						"celebrities",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/celebrities GET ALL",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080//celebrities",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"",
+						"celebrities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/celebrities DELETE",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080//celebrities/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"",
+						"celebrities",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
