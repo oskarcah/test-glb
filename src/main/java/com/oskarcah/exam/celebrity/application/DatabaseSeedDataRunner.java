@@ -1,5 +1,6 @@
 package com.oskarcah.exam.celebrity.application;
 
+import com.oskarcah.exam.celebrity.components.ProblemSolver;
 import com.oskarcah.exam.celebrity.components.ProblemSolverImpl;
 import com.oskarcah.exam.celebrity.model.KnownPerson;
 import com.oskarcah.exam.celebrity.model.Person;
@@ -26,17 +27,21 @@ import java.util.List;
 @Profile("!test")
 public class DatabaseSeedDataRunner implements CommandLineRunner {
 
-    @Autowired
     KnownPersonRepository knownPersonRepository;
 
-    @Autowired
     ProblemRepository problemRepository;
 
-    @Autowired
     PersonRepository personRepository;
 
+    ProblemSolver solver;
+
     @Autowired
-    ProblemSolverImpl solver;
+    public DatabaseSeedDataRunner(KnownPersonRepository knownPersonRepository, ProblemRepository problemRepository, PersonRepository personRepository, ProblemSolver solver) {
+        this.knownPersonRepository = knownPersonRepository;
+        this.problemRepository = problemRepository;
+        this.personRepository = personRepository;
+        this.solver = solver;
+    }
 
     @Override
     public void run(String... args) throws Exception {

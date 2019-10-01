@@ -20,13 +20,14 @@ import java.util.stream.Collectors;
 @Component
 public class ProblemInDatabaseBuilderImpl implements ProblemInDatabaseBuilder {
 
-    @Autowired
     ProblemSolverImpl problemSolver;
-    @Autowired
+
     private DataAccessComponentImpl dataAccess;
 
-    public ProblemInDatabaseBuilderImpl() {
-        super();
+    @Autowired
+    public ProblemInDatabaseBuilderImpl(ProblemSolverImpl problemSolver, DataAccessComponentImpl dataAccess) {
+        this.problemSolver = problemSolver;
+        this.dataAccess = dataAccess;
     }
 
     /**

@@ -24,7 +24,7 @@ public class ProblemRestDTOBuilderImpl implements ProblemRestDTOBuilder {
 
 
     public ProblemRestDTOBuilderImpl() {
-
+        super();
     }
 
     @Override

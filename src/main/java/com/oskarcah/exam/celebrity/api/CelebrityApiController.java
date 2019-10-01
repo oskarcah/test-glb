@@ -1,9 +1,7 @@
 package com.oskarcah.exam.celebrity.api;
 
 import com.oskarcah.exam.celebrity.application.CelebrityApplication;
-import com.oskarcah.exam.celebrity.components.DataAccessComponentImpl;
-import com.oskarcah.exam.celebrity.components.ProblemInDatabaseBuilderImpl;
-import com.oskarcah.exam.celebrity.components.ProblemRestDTOBuilderImpl;
+import com.oskarcah.exam.celebrity.components.*;
 import com.oskarcah.exam.celebrity.model.Problem;
 import com.oskarcah.exam.celebrity.dto.ProblemSetRequestDTO;
 import com.oskarcah.exam.celebrity.dto.ProblemSolutionResponseDTO;
@@ -23,15 +21,18 @@ import java.util.List;
 @Transactional
 public class CelebrityApiController {
 
+    private ProblemRestDTOBuilder dtoBuilder;
+
+    private ProblemInDatabaseBuilder problemBuilder;
+
+    private DataAccessComponent dataAccess;
 
     @Autowired
-    private ProblemRestDTOBuilderImpl dtoBuilder;
-
-    @Autowired
-    private ProblemInDatabaseBuilderImpl problemBuilder;
-
-    @Autowired
-    private DataAccessComponentImpl dataAccess;
+    public CelebrityApiController(ProblemRestDTOBuilder dtoBuilder, ProblemInDatabaseBuilder problemBuilder, DataAccessComponent dataAccess) {
+        this.dtoBuilder = dtoBuilder;
+        this.problemBuilder = problemBuilder;
+        this.dataAccess = dataAccess;
+    }
 
     /**
      *   <li>Endpoint http://base_url/celebrities</li>

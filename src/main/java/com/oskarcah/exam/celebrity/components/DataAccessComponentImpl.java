@@ -20,18 +20,17 @@ import java.util.Optional;
 @Component
 public class DataAccessComponentImpl implements DataAccessComponent {
 
-    @Autowired
     private ProblemRepository problemRepository;
 
-    @Autowired
     private KnownPersonRepository knownPersonRepository;
 
-    @Autowired
     private PersonRepository personRepository;
 
-
-    public DataAccessComponentImpl() {
-
+    @Autowired
+    public DataAccessComponentImpl(ProblemRepository problemRepository, KnownPersonRepository knownPersonRepository, PersonRepository personRepository) {
+        this.problemRepository = problemRepository;
+        this.knownPersonRepository = knownPersonRepository;
+        this.personRepository = personRepository;
     }
 
     @Override
