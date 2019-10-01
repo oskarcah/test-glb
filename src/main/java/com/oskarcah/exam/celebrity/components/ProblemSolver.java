@@ -1,26 +1,11 @@
 package com.oskarcah.exam.celebrity.components;
 
-import com.oskarcah.exam.celebrity.model.Problem;
 import com.oskarcah.exam.celebrity.model.Person;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import com.oskarcah.exam.celebrity.model.Problem;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-/**
- * Component with business logic layer, namely the algorithm for the solution of the celebrity problem.
- */
-@Component
-public class ProblemSolver {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProblemSolver.class);
-
-    public ProblemSolver() {
-        super();
-    }
-
+public interface ProblemSolver {
     /**
      * Creates a n x n matrix representing the "knows" relationship between 2 people.
      *
@@ -34,18 +19,7 @@ public class ProblemSolver {
      * @param problem
      * @return
      */
-    public int[][] createRelationshipMatrix(final Problem problem) {
-        final int n = problem.getPeopleCount();
-        int[][] matrix = new int[n][n];
-
-        //iterate over all people and fill the people relationship matrix in
-        problem.getPeopleRelations().stream().forEach(relation -> {
-            if (relation.getPerson1() != null && relation.getPerson2() != null) {
-                matrix[relation.getPerson1().getIndex()][relation.getPerson2().getIndex()] = 1;
-            }
-        });
-        return matrix;
-    }
+    int[][] createRelationshipMatrix(Problem problem);
 
     /**
      *  Performs problem solution by
@@ -55,30 +29,5 @@ public class ProblemSolver {
      * @param problem
      * @return List of person with information of person that fulfill criteria to be a celebrity
      */
-    public List<Person> solveProblem(final Problem problem) {
-        int[][] relationships = createRelationshipMatrix(problem);
-        int n = problem.getPeopleCount();
-
-        // array with counters of known by people. Example, if knownBy[i] == 5 implies that person is is known by 5 people
-        int[] knows = new int[n];
-        int[] knownBy = new int[n];
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                // diagonal is not taken into account because is trivial a person knows him/herself
-                if (i != j && relationships[i][j] == 1) {
-                    knows[i]++;
-                    knownBy[j]++;
-                }
-            }
-        }
-
-        // celebrities are people that count of knows = 0 and count of knowBy's = n - 1
-        return problem.getPeople().stream()
-                .filter(p -> {
-                    return knows[p.getIndex()] == 0 && knownBy[p.getIndex()] == n - 1;
-                })
-                .collect(Collectors.toList());
-
-    }
+    List<Person> solveProblem(Problem problem);
 }

@@ -1,14 +1,12 @@
 package com.oskarcah.exam.celebrity.application;
 
-import com.oskarcah.exam.celebrity.components.ProblemSolver;
+import com.oskarcah.exam.celebrity.components.ProblemSolverImpl;
 import com.oskarcah.exam.celebrity.model.KnownPerson;
 import com.oskarcah.exam.celebrity.model.Person;
 import com.oskarcah.exam.celebrity.model.Problem;
 import com.oskarcah.exam.celebrity.repositories.KnownPersonRepository;
 import com.oskarcah.exam.celebrity.repositories.PersonRepository;
 import com.oskarcah.exam.celebrity.repositories.ProblemRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
@@ -28,8 +26,6 @@ import java.util.List;
 @Profile("!test")
 public class DatabaseSeedDataRunner implements CommandLineRunner {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CelebrityApplication.class);
-
     @Autowired
     KnownPersonRepository knownPersonRepository;
 
@@ -40,12 +36,12 @@ public class DatabaseSeedDataRunner implements CommandLineRunner {
     PersonRepository personRepository;
 
     @Autowired
-    ProblemSolver solver;
+    ProblemSolverImpl solver;
 
     @Override
     public void run(String... args) throws Exception {
 
-        LOGGER.info("Adding one test case in DB");
+        CelebrityApplication.LOGGER.info("Adding one test case in DB");
 
         /*
          *  Seeding the database
@@ -129,10 +125,10 @@ public class DatabaseSeedDataRunner implements CommandLineRunner {
         problemRepository.save(problem1);
 
 
-        LOGGER.info("celebrities" + problem1.getCelebrities());
-        LOGGER.info("Adding one test case in DB");
-        LOGGER.info("Preloaded problem with id=" + problem1.getId());
-        LOGGER.info("Preloaded problem=" + problem1.toString());
+        CelebrityApplication.LOGGER.info("celebrities" + problem1.getCelebrities());
+        CelebrityApplication.LOGGER.info("Adding one test case in DB");
+        CelebrityApplication.LOGGER.info("Preloaded problem with id=" + problem1.getId());
+        CelebrityApplication.LOGGER.info("Preloaded problem=" + problem1.toString());
 
     }
 }

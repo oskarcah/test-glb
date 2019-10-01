@@ -2,23 +2,19 @@ package com.oskarcah.exam.celebrity;
 
 import com.oskarcah.exam.celebrity.application.CelebrityApplication;
 import com.oskarcah.exam.celebrity.application.DatabaseSeedDataRunner;
-import com.oskarcah.exam.celebrity.components.ProblemSolver;
+import com.oskarcah.exam.celebrity.components.ProblemSolverImpl;
 import com.oskarcah.exam.celebrity.model.KnownPerson;
 import com.oskarcah.exam.celebrity.model.Person;
 import com.oskarcah.exam.celebrity.model.Problem;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.util.Assert;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @SpringBootTest(classes= {CelebrityApplication.class})
@@ -30,13 +26,13 @@ public class CelebrityProblemTests {
 
 	private Problem p2;
 
-	private ProblemSolver problemSolver;
+	private ProblemSolverImpl problemSolver;
 
 
 	@Before
 	public void setup() {
 
-		problemSolver  = new ProblemSolver();
+		problemSolver  = new ProblemSolverImpl();
 
 		// people problem
 		p1 = new Problem();
