@@ -5,7 +5,7 @@ import com.oskarcah.exam.celebrity.model.Problem;
 
 import java.util.List;
 
-public interface ProblemSolver {
+public interface ProblemSolverComponent {
     /**
      * Creates a n x n matrix representing the "knows" relationship between 2 people.
      *

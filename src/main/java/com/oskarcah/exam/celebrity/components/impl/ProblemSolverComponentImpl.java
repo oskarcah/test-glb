@@ -1,10 +1,9 @@
-package com.oskarcah.exam.celebrity.components;
+package com.oskarcah.exam.celebrity.components.impl;
 
 import com.oskarcah.exam.celebrity.application.CelebrityApplication;
+import com.oskarcah.exam.celebrity.components.ProblemSolverComponent;
 import com.oskarcah.exam.celebrity.model.Problem;
 import com.oskarcah.exam.celebrity.model.Person;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -15,9 +14,9 @@ import java.util.stream.Collectors;
  * Component with business logic layer, namely the algorithm for the solution of the celebrity problem.
  */
 @Component
-public class ProblemSolverImpl implements ProblemSolver {
+public class ProblemSolverComponentImpl implements ProblemSolverComponent {
 
-    public ProblemSolverImpl() {
+    public ProblemSolverComponentImpl() {
         super();
     }
 

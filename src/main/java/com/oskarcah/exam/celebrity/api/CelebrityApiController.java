@@ -21,18 +21,14 @@ import java.util.List;
 @Transactional
 public class CelebrityApiController {
 
-    private ProblemRestDTOBuilder dtoBuilder;
 
-    private ProblemInDatabaseBuilder problemBuilder;
-
-    private DataAccessComponent dataAccess;
+    private CelebrityProblemManagerComponent problemManager;
 
     @Autowired
-    public CelebrityApiController(ProblemRestDTOBuilder dtoBuilder, ProblemInDatabaseBuilder problemBuilder, DataAccessComponent dataAccess) {
-        this.dtoBuilder = dtoBuilder;
-        this.problemBuilder = problemBuilder;
-        this.dataAccess = dataAccess;
+    public CelebrityApiController(CelebrityProblemManagerComponent problemManager) {
+        this.problemManager = problemManager;
     }
+
 
     /**
      *   <li>Endpoint http://base_url/celebrities</li>
@@ -44,7 +40,7 @@ public class CelebrityApiController {
     @RequestMapping(value="/celebrities", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<ProblemSolutionResponseDTO>> getAll() {
         CelebrityApplication.LOGGER.info("[CelebrityApiController.getAll] - method for endpoint \"/celebrities\" verb GET begin");
-        List<ProblemSolutionResponseDTO> response = dtoBuilder.buildListResponseDTO(dataAccess.findAllProblems());
+        List<ProblemSolutionResponseDTO> response = problemManager.getAllProblems();
         CelebrityApplication.LOGGER.info("[CelebrityApiController.getAll] - returned a list of n=" + (response == null ?  0 : response.size()) + " items of Problem");
         if (response == null || response.isEmpty()) {
             CelebrityApplication.LOGGER.info("[CelebrityApiController.getAll] - method for endpoint \"/celebrities\"  verb GET end  with 404 status");
@@ -68,15 +64,14 @@ public class CelebrityApiController {
     @RequestMapping(value="/celebrities/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ProblemSolutionResponseDTO> getById(@PathVariable("id") Long problemId) {
         CelebrityApplication.LOGGER.info("[CelebrityApiController.getById] - method for endpoint \"/celebrities/{id}\" verb GET begin");
-        Problem problem =  dataAccess.findProblemById(problemId);
-        if (problem == null) {
+        ProblemSolutionResponseDTO response =  problemManager.getProblemById(problemId);
+        if (response == null) {
             CelebrityApplication.LOGGER.info("[CelebrityApiController.getById] - not found any problem instance with id=" + problemId);
             CelebrityApplication.LOGGER.info("[CelebrityApiController.getById] - method for endpoint \"/celebrities/{id}\" verb GET  end  with 404 status");
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         } else {
             CelebrityApplication.LOGGER.info("[CelebrityApiController.getById] - a problem instance with id=" + problemId + " was found");
             CelebrityApplication.LOGGER.info("[CelebrityApiController.getById] - method for endpoint \"/celebrities/{id}\" verb GET end  with 200 status");
-            ProblemSolutionResponseDTO response = dtoBuilder.buildResponseDTO(problem);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
@@ -94,13 +89,13 @@ public class CelebrityApiController {
     @RequestMapping(value="/celebrities/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<String> delete(@PathVariable("id") Long problemId) {
         CelebrityApplication.LOGGER.info("[CelebrityApiController.delete] - method for endpoint \"/celebrities/{id}\"  verb DELETE begin");
-        if (!dataAccess.existsProblemById(problemId)) {
+        if (!problemManager.existsProblem(problemId)) {
             CelebrityApplication.LOGGER.info("[CelebrityApiController.delete] - not found any problem instance with id=" + problemId);
             CelebrityApplication.LOGGER.info("[CelebrityApiController.delete] - method for endpoint \"/celebrities/{id}\" verb DELETE  end  with 404 status");
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         } else {
             CelebrityApplication.LOGGER.info("[CelebrityApiController.delete] - a problem instance with id=" + problemId + " was found");
-            dataAccess.deleteProblemById(problemId);
+            problemManager.deleteProblemById(problemId);
             CelebrityApplication.LOGGER.info("[CelebrityApiController.delete] - method for endpoint \"/celebrities/{id}\" verb DELETE  end  with 204 status");
             return new ResponseEntity<>("deleted", HttpStatus.NO_CONTENT);
         }
@@ -119,16 +114,15 @@ public class CelebrityApiController {
     @RequestMapping(value="/celebrities/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ProblemSolutionResponseDTO> updateById(@PathVariable("id") Long problemId, @RequestBody ProblemSetRequestDTO request) {
         CelebrityApplication.LOGGER.info("[CelebrityApiController.updateById] - method for endpoint \"/celebrities/{id}\"  verb PUT begin request=" + request);
-        Problem problem = dataAccess.findProblemById(problemId);
-        if (problem == null) {
+        if (!problemManager.existsProblem(problemId)) {
             CelebrityApplication.LOGGER.info("[CelebrityApiController.updateById] - not found any problem instance with id=" + problemId);
             CelebrityApplication.LOGGER.info("[CelebrityApiController.updateById] - method for endpoint \"/celebrities/{id}\" verb PUT  end  with 404 status");
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         } else {
             CelebrityApplication.LOGGER.info("[CelebrityApiController.updateById] - a problem instance with id=" + problemId + " was found");
-            problem = problemBuilder.updateProblemSet(problem , request);
+            ProblemSolutionResponseDTO response = problemManager.updateProblemById(problemId, request);
             CelebrityApplication.LOGGER.info("[CelebrityApiController.updateById] - method for endpoint \"/celebrities/{id}\" verb PUT  end  with 200 status");
-            return new ResponseEntity<>(dtoBuilder.buildResponseDTO(problem), HttpStatus.OK);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
 
@@ -145,10 +139,10 @@ public class CelebrityApiController {
     @RequestMapping(value="/celebrities", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<String> post(@RequestBody ProblemSetRequestDTO request) {
         CelebrityApplication.LOGGER.info("[CelebrityApiController.post] - method for endpoint \"/celebrities/{id}\"  verb POST begin request=" + request);
-        Problem problem = problemBuilder.buildProblemSet(request);
-        CelebrityApplication.LOGGER.info("[CelebrityApiController.post] - a problem instance with id=" + problem.getId() + " was created");
+        ProblemSolutionResponseDTO problemDTO = problemManager.createProblem(request);
+        CelebrityApplication.LOGGER.info("[CelebrityApiController.post] - a problem instance with id=" + problemDTO.getId() + " was created");
         CelebrityApplication.LOGGER.info("[CelebrityApiController.updateById] - method for endpoint \"/celebrities/{id}\" verb POST  end  with 201 status");
-        return new ResponseEntity<>("" + problem.getId(), HttpStatus.CREATED);
+        return new ResponseEntity<>("" + problemDTO.getId(), HttpStatus.CREATED);
     }
 
 

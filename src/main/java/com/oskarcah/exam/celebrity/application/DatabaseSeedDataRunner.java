@@ -1,7 +1,6 @@
 package com.oskarcah.exam.celebrity.application;
 
-import com.oskarcah.exam.celebrity.components.ProblemSolver;
-import com.oskarcah.exam.celebrity.components.ProblemSolverImpl;
+import com.oskarcah.exam.celebrity.components.ProblemSolverComponent;
 import com.oskarcah.exam.celebrity.model.KnownPerson;
 import com.oskarcah.exam.celebrity.model.Person;
 import com.oskarcah.exam.celebrity.model.Problem;
@@ -33,10 +32,10 @@ public class DatabaseSeedDataRunner implements CommandLineRunner {
 
     PersonRepository personRepository;
 
-    ProblemSolver solver;
+    ProblemSolverComponent solver;
 
     @Autowired
-    public DatabaseSeedDataRunner(KnownPersonRepository knownPersonRepository, ProblemRepository problemRepository, PersonRepository personRepository, ProblemSolver solver) {
+    public DatabaseSeedDataRunner(KnownPersonRepository knownPersonRepository, ProblemRepository problemRepository, PersonRepository personRepository, ProblemSolverComponent solver) {
         this.knownPersonRepository = knownPersonRepository;
         this.problemRepository = problemRepository;
         this.personRepository = personRepository;

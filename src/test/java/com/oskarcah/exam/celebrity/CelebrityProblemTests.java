@@ -2,7 +2,7 @@ package com.oskarcah.exam.celebrity;
 
 import com.oskarcah.exam.celebrity.application.CelebrityApplication;
 import com.oskarcah.exam.celebrity.application.DatabaseSeedDataRunner;
-import com.oskarcah.exam.celebrity.components.ProblemSolverImpl;
+import com.oskarcah.exam.celebrity.components.impl.ProblemSolverComponentImpl;
 import com.oskarcah.exam.celebrity.model.KnownPerson;
 import com.oskarcah.exam.celebrity.model.Person;
 import com.oskarcah.exam.celebrity.model.Problem;
@@ -26,13 +26,13 @@ public class CelebrityProblemTests {
 
 	private Problem p2;
 
-	private ProblemSolverImpl problemSolver;
+	private ProblemSolverComponentImpl problemSolver;
 
 
 	@Before
 	public void setup() {
 
-		problemSolver  = new ProblemSolverImpl();
+		problemSolver  = new ProblemSolverComponentImpl();
 
 		// people problem
 		p1 = new Problem();

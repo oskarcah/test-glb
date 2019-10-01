@@ -1,7 +1,8 @@
-package com.oskarcah.exam.celebrity.components;
+package com.oskarcah.exam.celebrity.components.impl;
 
 import com.oskarcah.exam.celebrity.api.CelebrityApiController;
 import com.oskarcah.exam.celebrity.application.CelebrityApplication;
+import com.oskarcah.exam.celebrity.components.ProblemRestDTOBuilder;
 import com.oskarcah.exam.celebrity.dto.PeopleKnowRelationDTO;
 import com.oskarcah.exam.celebrity.model.Problem;
 import com.oskarcah.exam.celebrity.dto.ProblemSolutionResponseDTO;

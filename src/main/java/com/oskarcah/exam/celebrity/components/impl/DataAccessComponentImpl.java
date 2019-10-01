@@ -1,7 +1,8 @@
-package com.oskarcah.exam.celebrity.components;
+package com.oskarcah.exam.celebrity.components.impl;
 
 import com.oskarcah.exam.celebrity.api.CelebrityApiController;
 import com.oskarcah.exam.celebrity.application.CelebrityApplication;
+import com.oskarcah.exam.celebrity.components.DataAccessComponent;
 import com.oskarcah.exam.celebrity.model.Problem;
 import com.oskarcah.exam.celebrity.repositories.ProblemRepository;
 import com.oskarcah.exam.celebrity.repositories.KnownPersonRepository;
@@ -39,11 +40,11 @@ public class DataAccessComponentImpl implements DataAccessComponent {
     }
 
     @Override
-    public Problem findProblemById(Long id) {
+    public Optional<Problem> findProblemById(Long id) {
         CelebrityApplication.LOGGER.info("[DataAccessComponentImpl.findProblemById] - method begin id=" + id);
         Optional<Problem> opt = problemRepository.findById(id);
         CelebrityApplication.LOGGER.info("[DataAccessComponentImpl.findProblemById] - method end id=" + id);
-        return opt.isPresent() ? opt.get() : null;
+        return opt;
     }
 
     @Override
@@ -57,8 +58,8 @@ public class DataAccessComponentImpl implements DataAccessComponent {
     }
 
     @Override
-    public void saveProblem(Problem p) {
-        problemRepository.save(p);
+    public Problem saveProblem(Problem p) {
+        return problemRepository.save(p);
     }
 
     @Override
