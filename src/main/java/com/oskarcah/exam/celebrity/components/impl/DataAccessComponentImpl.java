@@ -1,14 +1,13 @@
 package com.oskarcah.exam.celebrity.components.impl;
 
-import com.oskarcah.exam.celebrity.api.CelebrityApiController;
 import com.oskarcah.exam.celebrity.application.CelebrityApplication;
 import com.oskarcah.exam.celebrity.components.DataAccessComponent;
+import com.oskarcah.exam.celebrity.exceptions.DataAccessException;
+import com.oskarcah.exam.celebrity.exceptions.ProblemNotFoundException;
 import com.oskarcah.exam.celebrity.model.Problem;
-import com.oskarcah.exam.celebrity.repositories.ProblemRepository;
 import com.oskarcah.exam.celebrity.repositories.KnownPersonRepository;
 import com.oskarcah.exam.celebrity.repositories.PersonRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.oskarcah.exam.celebrity.repositories.ProblemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -35,50 +34,103 @@ public class DataAccessComponentImpl implements DataAccessComponent {
     }
 
     @Override
-    public Iterable<Problem> findAllProblems() {
-        return problemRepository.findAll();
+    public Iterable<Problem> findAllProblems() throws Exception {
+        try {
+            Iterable<Problem> problems = problemRepository.findAll();
+            if (!problems.iterator().hasNext()) {
+                throw new ProblemNotFoundException();
+            }
+            return problems;
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
     }
 
     @Override
-    public Optional<Problem> findProblemById(Long id) {
-        CelebrityApplication.LOGGER.info("[DataAccessComponentImpl.findProblemById] - method begin id=" + id);
-        Optional<Problem> opt = problemRepository.findById(id);
-        CelebrityApplication.LOGGER.info("[DataAccessComponentImpl.findProblemById] - method end id=" + id);
-        return opt;
+    public Optional<Problem> findProblemById(Long id) throws Exception {
+        try {
+            CelebrityApplication.LOGGER.info("[DataAccessComponentImpl.findProblemById] - method begin id=" + id);
+            Optional<Problem> opt = problemRepository.findById(id);
+            CelebrityApplication.LOGGER.info("[DataAccessComponentImpl.findProblemById] - method end id=" + id);
+            return opt;
+        } catch (Exception e) {
+            CelebrityApplication.LOGGER.info("[DataAccessComponentImpl.findProblemById] - Exception thrown " + e);
+            throw new DataAccessException(e);
+        }
     }
 
     @Override
-    public boolean existsProblemById(Long id) {
-        return problemRepository.existsById(id);
+    public boolean existsProblemById(Long id) throws Exception {
+        try {
+            CelebrityApplication.LOGGER.info("[DataAccessComponentImpl.existsProblemById] - method begin id=" + id);
+            return problemRepository.existsById(id);
+        } catch (Exception e) {
+            CelebrityApplication.LOGGER.info("[DataAccessComponentImpl.existsProblemById] - Exception thrown " + e);
+            throw new DataAccessException(e);
+        }
     }
 
     @Override
-    public void deleteProblemById(Long id) {
-        problemRepository.deleteById(id);
+    public void deleteProblemById(Long id) throws Exception {
+        try {
+            CelebrityApplication.LOGGER.info("[DataAccessComponentImpl.deleteProblemById] - method begin id=" + id);
+            problemRepository.deleteById(id);
+        } catch (Exception e) {
+            CelebrityApplication.LOGGER.info("[DataAccessComponentImpl.deleteProblemById] - Exception thrown " + e);
+            throw new DataAccessException(e);
+        }
     }
 
     @Override
-    public Problem saveProblem(Problem p) {
-        return problemRepository.save(p);
+    public Problem saveProblem(Problem p) throws Exception {
+        try {
+            CelebrityApplication.LOGGER.info("[DataAccessComponentImpl.saveProblem] - method begin problem=" + p);
+            return problemRepository.save(p);
+        } catch (Exception e) {
+            CelebrityApplication.LOGGER.info("[DataAccessComponentImpl.saveProblem] - Exception thrown " + e);
+            throw new DataAccessException(e);
+        }
     }
 
     @Override
-    public void deletePersonById(Long id) {
-        personRepository.deleteById(id);
+    public void deletePersonById(Long id) throws Exception {
+        try {
+            CelebrityApplication.LOGGER.info("[DataAccessComponentImpl.deletePersonById] - method begin id=" + id);
+            personRepository.deleteById(id);
+        } catch (Exception e) {
+            CelebrityApplication.LOGGER.info("[DataAccessComponentImpl.deletePersonById] - Exception thrown " + e);
+            throw new DataAccessException(e);
+        }
     }
 
     @Override
-    public void deletePeopleByIds(List<Long> ids) {
-        personRepository.deleteByIdIn(ids);
+    public void deletePeopleByIds(List<Long> ids) throws Exception {
+        try {
+            CelebrityApplication.LOGGER.info("[DataAccessComponentImpl.deletePeopleByIds] - method begin ids=" + ids);
+            personRepository.deleteByIdIn(ids);
+        } catch (Exception e) {
+            CelebrityApplication.LOGGER.info("[DataAccessComponentImpl.deletePeopleByIds] - Exception thrown " + e);
+            throw new DataAccessException(e);
+        }
     }
 
     @Override
-    public void deletePersonRelationById(Long id) {
-        knownPersonRepository.deleteById(id);
+    public void deletePersonRelationById(Long id) throws Exception {
+        try {
+            CelebrityApplication.LOGGER.info("[DataAccessComponentImpl.deletePersonRelationById] - method begin id=" + id);
+            knownPersonRepository.deleteById(id);
+        } catch (Exception e) {
+            CelebrityApplication.LOGGER.info("[DataAccessComponentImpl.deletePersonRelationById] - Exception thrown " + e);
+            throw new DataAccessException(e);
+        }
     }
 
     @Override
-    public void deletePersonRelationsByIds(List<Long> ids) {
-        knownPersonRepository.deleteByIdIn(ids);
+    public void deletePersonRelationsByIds(List<Long> ids) throws Exception {
+        try {
+            knownPersonRepository.deleteByIdIn(ids);
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
     }
 }

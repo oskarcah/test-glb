@@ -1,10 +1,14 @@
 package com.oskarcah.exam.celebrity.components;
 
+import com.oskarcah.exam.celebrity.exceptions.CelebrityException;
 import com.oskarcah.exam.celebrity.model.Person;
 import com.oskarcah.exam.celebrity.model.Problem;
 
 import java.util.List;
 
+/**
+ *
+ */
 public interface ProblemSolverComponent {
     /**
      * Creates a n x n matrix representing the "knows" relationship between 2 people.

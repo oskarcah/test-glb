@@ -2,8 +2,9 @@ package com.oskarcah.exam.celebrity.components.impl;
 
 import com.oskarcah.exam.celebrity.application.CelebrityApplication;
 import com.oskarcah.exam.celebrity.components.ProblemSolverComponent;
-import com.oskarcah.exam.celebrity.model.Problem;
+import com.oskarcah.exam.celebrity.exceptions.CelebrityException;
 import com.oskarcah.exam.celebrity.model.Person;
+import com.oskarcah.exam.celebrity.model.Problem;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
  */
 @Component
 public class ProblemSolverComponentImpl implements ProblemSolverComponent {
+
 
     public ProblemSolverComponentImpl() {
         super();
@@ -32,13 +34,14 @@ public class ProblemSolverComponentImpl implements ProblemSolverComponent {
                 matrix[relation.getPerson1().getIndex()][relation.getPerson2().getIndex()] = 1;
             }
         });
-        CelebrityApplication.LOGGER.info("[ProblemSolverImpl.createRelationshipMatrix] - method end  returned matrix of size "+ (matrix == null ? 0 : matrix.length));
+        CelebrityApplication.LOGGER.info("[ProblemSolverImpl.createRelationshipMatrix] - method end  returned matrix of size " + (matrix == null ? 0 : matrix.length));
         return matrix;
     }
 
     @Override
     public List<Person> solveProblem(final Problem problem) {
         CelebrityApplication.LOGGER.info("[ProblemSolverImpl.solveProblem] - method begin  problem=" + problem);
+
         int[][] relationships = createRelationshipMatrix(problem);
         int n = problem.getPeopleCount();
 

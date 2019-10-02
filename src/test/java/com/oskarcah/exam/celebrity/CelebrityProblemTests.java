@@ -90,7 +90,7 @@ public class CelebrityProblemTests {
 	}
 
 	@Test
-	public void testProblemSolving() {
+	public void testProblemSolving() throws Exception {
 		List<Person> solution = problemSolver.solveProblem(p2);
 		Assertions.assertThat(solution).isNotEmpty();
 		Assertions.assertThat(solution.size()).isEqualTo(1);
