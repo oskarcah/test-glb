@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity()
-@Table(name="problem_set")
+@Table(name="problem")
 public class Problem {
 
     @Id
@@ -22,13 +22,23 @@ public class Problem {
     private Date lastModifiedAt;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="problem_set_id")
+    @JoinColumn(name="problem_id")
     private List<KnownPerson> peopleRelations;
 
     @OneToMany(cascade =  CascadeType.ALL)
+    @JoinTable(
+            name = "problem_people",
+            joinColumns = @JoinColumn(name="problem_id"),
+            inverseJoinColumns = @JoinColumn(name="person_id")
+    )
     private List<Person> people;
 
     @OneToMany(cascade =  CascadeType.ALL)
+    @JoinTable(
+            name = "problem_celebrities",
+            joinColumns = @JoinColumn(name="problem_id"),
+            inverseJoinColumns = @JoinColumn(name="celebrity_id")
+    )
     private List<Person> celebrities;
 
     public Problem() {
